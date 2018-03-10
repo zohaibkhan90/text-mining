@@ -1,9 +1,9 @@
 #Path to the directory to be used for saving downloaded tweets
-dir_path_tweet_files = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/us_elections/us_elections/USElections_Downloaded_Tweets_batch2'
+dir_path_tweet_files = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/us_elections/USElections_Downloaded_Tweets_batch9'
 #Pattern for the file names that will be used to save the downloaded tweets in the aboove directory: example -> for value file_xxxx.txt, the generated files will be names as file_0.txt, file_1.txt, file_2.txt, file_3.txt, file_4.txt
 downloaded_tweets_file_name = 'us_elections_downloaded_tweets_xxxx.txt'
 #Path to the directory that contains the files for tweet ids
-dir_path_tweet_ids_files = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/us_elections/us_elections/USElections_ids'
+dir_path_tweet_ids_files = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/us_elections/USElections_ids_batch9copy'
 
 
 import tweepy
@@ -45,8 +45,8 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
 list_of_tweet_ids = []
 completed_files = 0
-
-file_number = 18
+completed_files_list = []
+file_number = 187
 for filename in os.listdir(dir_path_tweet_ids_files):
     tweet_ids_file = open(dir_path_tweet_ids_files+'/'+filename,'r')
     list_of_tweet_ids = tweet_ids_file.readlines()
@@ -65,4 +65,6 @@ for filename in os.listdir(dir_path_tweet_ids_files):
                 # print (tweet.text)
                 TweetsOutputFile.write(str(tweet._json))
                 TweetsOutputFile.write('\n')
+    completed_files_list.append(filename)
+    print ("Completed Files: "+str(completed_files_list))
     TweetsOutputFile.close()
