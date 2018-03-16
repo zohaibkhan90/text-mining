@@ -4,13 +4,14 @@
 import ast
 import os
 
-output_file = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/events_corpus.tsv'
+output_file = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/events_corpus.csv'
 directory_path = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/All_Downloaded_tweets'
 
-TSV_File = open(output_file,'w')
-TSV_File.write("Class\tText\n")
+separator = ","
+CSV_File = open(output_file,'w')
+CSV_File.write("event"+separator+"text\n")
 
-max_class_limit = 161190 #max tweets to be written from a single class/event
+max_class_limit = 10000 #max tweets to be written from a single class/event
 # max_class_limit = 100 #max tweets to be written from a single class/event
 corpus_class = '' #name for class of an event
 class_limit = 0 #number of tweets written from a single class/event
@@ -39,13 +40,16 @@ for filename in os.listdir(directory_path):
 			print ("Total Tweets from class: "+corpus_class +': '+ str(class_limit))
 		if json_str['lang'] == 'en':
 			class_limit = class_limit + 1
-			tweet_text = json_str['text'].replace('\n',' ')
+			tweet_text = json_str['text'].replace('\r',' ')
+			tweet_text = tweet_text.replace('\n',' ')
+			tweet_text = tweet_text.replace(separator,' ')
 			# print('TWEET: '+tweet_text)
-			TSV_File.write(corpus_class+"\t"+tweet_text+"\n")
+			CSV_File.write(corpus_class+separator+tweet_text+"\n")
+			# 177078285476438017
 		if class_limit >= max_class_limit:
 			print ("Completed limit for class: "+corpus_class +', Total entries: '+ str(class_limit))
 			if US_Tweets_Started:
 				quit = 1
 			class_limit = 0
 			break
-TSV_File.close()
+CSV_File.close()
