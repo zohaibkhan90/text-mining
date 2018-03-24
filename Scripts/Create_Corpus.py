@@ -15,7 +15,7 @@ separator = ","
 CSV_File = open(output_file,'w')
 CSV_File.write("event"+separator+"text\n")
 
-max_class_limit = 10000 #max tweets to be written from a single class/event
+max_class_limit = 161190 #max tweets to be written from a single class/event
 max_general_limit = 1*max_class_limit
 # max_class_limit = 100 #max tweets to be written from a single class/event
 corpus_class = '' #name for class of an event
