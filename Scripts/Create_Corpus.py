@@ -3,9 +3,11 @@
 # import re
 import ast
 import os
+import json
 
-output_file = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/events_corpus.csv'
-directory_path = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/All_Downloaded_tweets'
+output_file = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/events_corpus_test.csv'
+events_tweets_directory_path = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/All_Downloaded_tweets'
+general_tweets_directory_path = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/General_Tweets'
 
 separator = ","
 CSV_File = open(output_file,'w')
@@ -18,18 +20,36 @@ class_limit = 0 #number of tweets written from a single class/event
 count = 0
 quit = 0
 US_Tweets_Started = False
-for filename in os.listdir(directory_path):
+
+ListOfFiles = []
+
+def readDirectory (dir_path): #recursivelt reads directory for general tweets and adds all files paths in a list
+	# print("Directory Path is "+dir_path)
+	if os.path.isdir(dir_path):
+		for x in os.walk(dir_path):
+			for z in x[1]: #for all directories
+				# print("recursive call with path: "+x[0]+"/"+z)
+				readDirectory(x[0]+"/"+z)
+			for z in x[2]: #for all files
+				if x[0]+"/"+z not in ListOfFiles and z != ".DS_Store": # let not the files repeat and ignore the .DS_Store file of Mac OS
+					# print("Final Path to File: "+x[0]+"/"+z)
+					ListOfFiles.append(x[0]+"/"+z)
+readDirectory(general_tweets_directory_path)
+
+
+for filename in os.listdir(events_tweets_directory_path):
 	if 'fa_cup_downloaded_tweets' in filename:
-		corpus_class = 'Fifa_Final'
+		corpus_class = 'fifa_final'
 	elif 'super_tuesday_data' in filename:
-		corpus_class = 'Super_Tuesday'
+		corpus_class = 'super_tuesday'
 	elif 'us_elections_downloaded_tweets' in filename:
 		US_Tweets_Started = True
-		corpus_class = 'US_Elections'
+		corpus_class = 'us_elections'
 		if quit == 1:
 			break
-	tweets_file = open(directory_path+'/'+filename,'r')
+	tweets_file = open(events_tweets_directory_path+'/'+filename,'r')
 	lineString = tweets_file.readlines()
+	tweets_file.close()
 	print ('running file: '+str(filename) + ' with corpus class: '+ str(corpus_class))
 	for value in lineString:
 		json_str = ast.literal_eval(value)
@@ -52,4 +72,23 @@ for filename in os.listdir(directory_path):
 				quit = 1
 			class_limit = 0
 			break
+g_limit = 0
+for file in ListOfFiles:
+	print("Reading general tweets File: "+file)
+	tweets_file = open(file,'r')
+	lineString = tweets_file.readlines()
+	tweets_file.close()
+	for value in lineString:
+		json_str = json.loads(value)
+		if 'lang' in json_str and json_str['lang'] == 'en':
+			tweet_text = json_str['text'].replace('\r',' ')
+			tweet_text = tweet_text.replace('\n',' ')
+			tweet_text = tweet_text.replace(separator,' ')
+			CSV_File.write("no_event"+separator+tweet_text+"\n")
+			g_limit = g_limit + 1
+		if g_limit >= max_class_limit:
+			print ("Completed limit for class: no_event, Total entries:" + str(g_limit))
+			break
+	if g_limit >= max_class_limit:
+		break
 CSV_File.close()
