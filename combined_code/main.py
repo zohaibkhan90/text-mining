@@ -21,11 +21,11 @@ X_train, X_test, y_train, y_test = ts.splitTestTrain(X_vec, y_encoded)
 #kfold validation
 #X_train, X_test, y_train, y_test = kFold(X_vec, y_encoded)
 #plot Labels of Dataset
-ts.plotLabels(y)
+# ts.plotLabels(y)
 
 # print("Start training")
 #precison, recall and f-measure of all the six classifiers
-# naiveBayesPrecision, naiveBayesRecall, naiveBayesFMeasure = ts.applyNaiveBayesClassifier(X_train, y_train, X_test, y_test)
+naiveBayesPrecision, naiveBayesRecall, naiveBayesFMeasure = ts.applyNaiveBayesClassifier(X_train, y_train, X_test, y_test)
 # svmPrecision, svmRecall, svmFMeasure = ts.applySVMClassifier(X_train, y_train, X_test, y_test)
 # randomForestPrecision, randomForestRecall, randomForestFMeasure = ts.applyRandomForestClassifier(X_train, y_train, X_test, y_test)
 # logisticRegressionPrecision, logisticRegressionRecall, logisticRegressionFMeasure = ts.applyLogisticRegressionClassifier(X_train, y_train, X_test, y_test)
