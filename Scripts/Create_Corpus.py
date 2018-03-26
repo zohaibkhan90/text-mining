@@ -66,6 +66,7 @@ for filename in os.listdir(events_tweets_directory_path):
 			tweet_text = json_str['text'].replace('\r',' ')
 			tweet_text = tweet_text.replace('\n',' ')
 			tweet_text = tweet_text.replace(separator,' ')
+			tweet_text = tweet_text.replace('RT ','')
 			# print('TWEET: '+tweet_text)
 			CSV_File.write(corpus_class+separator+tweet_text+"\n")
 			# 177078285476438017
@@ -87,6 +88,7 @@ for file in ListOfFiles:
 			tweet_text = json_str['text'].replace('\r',' ')
 			tweet_text = tweet_text.replace('\n',' ')
 			tweet_text = tweet_text.replace(separator,' ')
+			tweet_text = tweet_text.replace('RT ','')
 			CSV_File.write("no_event"+separator+tweet_text+"\n")
 			g_limit = g_limit + 1
 		if g_limit >= max_general_limit:
