@@ -2,8 +2,13 @@
 import event_detection as ts
 
 x, y = ts.pre()
+needCleanDataOutputFile = True 
+if needCleanDataOutputFile:
+	file = open('CleanTextFile.txt','w') 
+	print("Writing CleanTextFile.txt ")
+	[file.write(sentence) for sentence in x]
+	file.close()
 
-[print(sentence) for sentence in x]
 # Let us consider CountVectorizer from sklearn
 # CountVectorizer, TfidfVectorizer, Word Embeddings, Word2Vec
 # X_vec = ts.countVectorizer(x)
