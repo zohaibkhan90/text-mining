@@ -16,7 +16,7 @@ nerd_annotation_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 nerd_annotation_data = {
 	'key' : '9reqenou0oc0dop4aet49kht1eis95d5',
 	'idDocument' : '',#set this idDocument for the document you need
-	'extractor' : 'combined'
+	'extractor' : 'textrazor'
 }
 
 #URL and parameters for nerd entity call
@@ -73,7 +73,7 @@ def callNERD_EntityAPI(idAnnotation):
 	try:
 		response = urlopen(request)
 		data = response.read()
-		print(data)
+		return data
 	except URLError as e:
 	    print ('Got an error code:'+ str(e))
 
@@ -103,6 +103,6 @@ def callYAGO(data):
 	except Exception as e:
 	    print ('Got an error code:'+ str(e))
 
-print(str(callNERD("Alvin Green")))
+# print(str(callNERD("Alvin Green")))
 
 
