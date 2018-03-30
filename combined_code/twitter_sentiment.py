@@ -7,7 +7,6 @@ from sklearn.model_selection import train_test_split, KFold
 from sklearn import metrics
 from sklearn.metrics import precision_score, recall_score
 from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 from nltk.stem import WordNetLemmatizer
@@ -16,8 +15,6 @@ from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 from collections import Counter
 import matplotlib.pyplot as plt
-import re
-
 #Import Classifiers
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import cross_val_score
@@ -26,6 +23,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
+import string
 
 
 def lemmatize(word):
@@ -33,52 +31,27 @@ def lemmatize(word):
     return lemmatizer.lemmatize(word=word)
 
 def stem(word):
-    porter_stemmer = PorterStemmer()
-    return porter_stemmer.stem(word=word)
-
-def finalClean(tweet):
-    #Convert to lower case
-    tweet = tweet.lower()
-
-    #Remove additional white spaces
-    tweet = re.sub('[\s]+', ' ', tweet)
-
-    #Strip tweet
-    tweet = tweet.strip('\'"')
-    
-    #look for 2 or more repetitions of character and replace with the character itself
-    pattern = re.compile(r"(.)\1{1,}", re.DOTALL)
-    return pattern.sub(r"\1\1", tweet)
+    stemmer = porter_stemmer()
+    return stemmer.stem(word=word)
 
 def pre():
     # Reading training and test files to list data structures
-    data = pd.read_csv("events_corpus_10k_1.csv", sep = ",", index_col=False, encoding='latin-1', low_memory=False)
+    data = pd.read_csv("events_corpus_10k.csv", sep = ",", index_col=False, encoding='latin-1', low_memory=False)
     df_old = DataFrame(data)
-
-    # Take those datasets in which text is not null
     df = df_old[df_old['text'].notnull()]
-
+    # print(df)
     labelCount = df.groupby(df['event']).count()
     print(labelCount)
-
-    # Replaces URLs (http/www) 
     x = df['text'].str.replace('http\S+|www.\S+', '', case=False)
-
-    # Changes types in events column to string
     y = df['event'].astype(str)
-
-    # Replaces words with special characters
-    x = x.str.replace('[^a-zA-Z0-9-_.]', ' ')
-
-    # Lemmatize words
-    x_lemma = [" ".join([lemmatize(word) for word in sentence.split(" ")]) for sentence in x]
-
-    # x_stem = [" ".join([stem(word) for word in sentence.split(" ")]) for sentence in x_lemma]
-
-    # Clean data per word
-    x_clean = [finalClean(sentence) for sentence in x_lemma]
-    #temp_df = [filter(lambda i: i not in string.punctuation,sentence) for sentence in x_clean]
-    return x_clean, y
+    x = x.str.replace('[^a-zA-Z0-9-_*.]', ' ')
+    printable = set(string.printable)
+    filter(lambda q: q in printable, x)
+    x_check = [" ".join([lemmatize(word) for word in sentence.split(" ")]) for sentence in x]
+    #temp_df = [filter(lambda i: i not in string.punctuation,sentence) for sentence in x_check]
+    # print(x_check)
+    
+    return x_check, y
 
 def labelEncoding(y):
     labelEncoder = LabelEncoder()
@@ -88,7 +61,7 @@ def labelEncoding(y):
 
 def countVectorizer(x):
     stopset = set(stopwords.words('English'))
-    vect = CountVectorizer(analyzer='char_wb', encoding='utf-8', min_df = 0, ngram_range=(2, 2), lowercase = True, strip_accents='ascii', stop_words = stopset)
+    vect = CountVectorizer(analyzer='word', encoding='utf-8', min_df = 0, ngram_range=(1, 1), lowercase = True, strip_accents='ascii', stop_words = stopset)
     X_vec = vect.fit_transform(x)
     return X_vec
 
@@ -100,7 +73,7 @@ def tfidfVectorizer(x):
 
 def splitTestTrain(X_vec, y_encoded):
     X_train, X_test, y_train, y_test = train_test_split(X_vec, y_encoded, 
-													test_size=0.2, random_state=0, shuffle=True)
+													test_size=0.99, random_state=0, shuffle=True)
     return X_train, X_test, y_train, y_test
 
 def kFold(X_vec, y_encoded):
@@ -147,7 +120,7 @@ def applyNaiveBayesClassifier(X_train, y_train, X_test, y_test):
     mnb_classifier = MultinomialNB()
     mnb_classifier.fit(X_train, y_train)
     model_accuracies = cross_val_score(estimator=mnb_classifier, 
-                                       X=X_train, y=y_train, cv=10)
+                                       X=X_train, y=y_train, cv=2)
     model_accuracies.mean()
     model_accuracies.std()
     # Model Testing: Multinomial Naive Bayes
