@@ -26,6 +26,8 @@ from sklearn.ensemble import RandomForestClassifier
 
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
+import string
+
 
 
 def lemmatize(word):
@@ -52,7 +54,7 @@ def finalClean(tweet):
 
 def pre():
     # Reading training and test files to list data structures
-    data = pd.read_csv("events_corpus_10k_1.csv", sep = ",", index_col=False, encoding='latin-1', low_memory=False)
+    data = pd.read_csv("../events_corpus.csv", sep = ",", index_col=False, encoding='latin-1', low_memory=False)
     df_old = DataFrame(data)
 
     # Take those datasets in which text is not null
@@ -69,6 +71,10 @@ def pre():
 
     # Replaces words with special characters
     x = x.str.replace('[^a-zA-Z0-9-_.]', ' ')
+
+    # Replaces unreadable characters, further cleaning
+    printable = set(string.printable)
+    filter(lambda q: q in printable, x)
 
     # Lemmatize words
     x_lemma = [" ".join([lemmatize(word) for word in sentence.split(" ")]) for sentence in x]
