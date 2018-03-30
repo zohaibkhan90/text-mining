@@ -1,14 +1,29 @@
-#Path to the directory to be used for saving downloaded tweets
-dir_path_tweet_files = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/us_elections/USElections_Downloaded_Tweets_batch9'
-#Pattern for the file names that will be used to save the downloaded tweets in the aboove directory: example -> for value file_xxxx.txt, the generated files will be names as file_0.txt, file_1.txt, file_2.txt, file_3.txt, file_4.txt
-downloaded_tweets_file_name = 'us_elections_downloaded_tweets_xxxx.txt'
-#Path to the directory that contains the files for tweet ids
-dir_path_tweet_ids_files = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/us_elections/USElections_ids_batch9copy'
-
-
+import sys
 import tweepy
 import os
 
+# print("This is the name of the script: ", sys.argv[0])
+# print("Number of arguments: ", len(sys.argv))
+# print("The arguments are: " , str(sys.argv))
+
+if len(sys.argv) < 3:
+    print('Less arguments provided')
+    print('Usage: python DownloadTweets.py <input_dir> <output_dir>')
+    sys.exit(1)
+
+if len(sys.argv) > 3:
+    print('Too many arguments provided')
+    print('Usage: python DownloadTweets.py <input_dir> <output_dir>')
+    sys.exit(1)
+
+#Pattern for the file names that will be used to save the downloaded tweets in the aboove directory: example -> for value file_xxxx.txt, the generated files will be names as file_0.txt, file_1.txt, file_2.txt, file_3.txt, file_4.txt
+downloaded_tweets_file_name = 'output_xxxx.txt'
+
+#Path to the directory that contains the files for tweet ids
+dir_path_tweet_ids_files = sys.argv[1]
+
+#Path to the directory to be used for saving downloaded tweets
+dir_path_tweet_files = sys.argv[2]
 
 
 def lookup_tweets(tweet_IDs, api):
@@ -46,7 +61,7 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 list_of_tweet_ids = []
 completed_files = 0
 completed_files_list = []
-file_number = 187
+file_number = 0
 for filename in os.listdir(dir_path_tweet_ids_files):
     tweet_ids_file = open(dir_path_tweet_ids_files+'/'+filename,'r')
     list_of_tweet_ids = tweet_ids_file.readlines()
