@@ -2,7 +2,7 @@
 import event_detection as ts
 
 x, y = ts.pre()
-needCleanDataOutputFile = True 
+needCleanDataOutputFile = False 
 if needCleanDataOutputFile:
 	file = open('CleanTextFile.txt','w') 
 	print("Writing CleanTextFile.txt ")
@@ -27,14 +27,14 @@ if needCleanDataOutputFile:
 
 print("Start training")
 #precison, recall and f-measure of all the six classifiers
-# naiveBayesPrecision, naiveBayesRecall, naiveBayesFMeasure = ts.applyNaiveBayesClassifier(X_train, y_train, X_test, y_test)
-# svmPrecision, svmRecall, svmFMeasure = ts.applySVMClassifier(X_train, y_train, X_test, y_test)
-# randomForestPrecision, randomForestRecall, randomForestFMeasure = ts.applyRandomForestClassifier(X_train, y_train, X_test, y_test)
-# logisticRegressionPrecision, logisticRegressionRecall, logisticRegressionFMeasure = ts.applyLogisticRegressionClassifier(X_train, y_train, X_test, y_test)
-# sgdPrecision, sgdRecall, sgdFMeasure = ts.applySGDClassifier(X_train, y_train, X_test, y_test)
-# decisionTreePrecision, decisionTreeRecall, decisionTreeFMeasure = ts.applyDecisionTreeClassifier(X_train, y_train, X_test, y_test)
+naiveBayesPrecision, naiveBayesRecall, naiveBayesFMeasure = ts.applyNaiveBayesClassifier(X_train, y_train, X_test, y_test)
+svmPrecision, svmRecall, svmFMeasure = ts.applySVMClassifier(X_train, y_train, X_test, y_test)
+randomForestPrecision, randomForestRecall, randomForestFMeasure = ts.applyRandomForestClassifier(X_train, y_train, X_test, y_test)
+logisticRegressionPrecision, logisticRegressionRecall, logisticRegressionFMeasure = ts.applyLogisticRegressionClassifier(X_train, y_train, X_test, y_test)
+sgdPrecision, sgdRecall, sgdFMeasure = ts.applySGDClassifier(X_train, y_train, X_test, y_test)
+decisionTreePrecision, decisionTreeRecall, decisionTreeFMeasure = ts.applyDecisionTreeClassifier(X_train, y_train, X_test, y_test)
 
 #Plot Precision-Recall comparison graph
-# ts.plotPreRec(naiveBayesRecall, naiveBayesPrecision, svmRecall, svmPrecision, randomForestRecall, randomForestPrecision, logisticRegressionRecall, logisticRegressionPrecision, sgdRecall, sgdPrecision)
+ts.plotPreRec(naiveBayesRecall, naiveBayesPrecision, svmRecall, svmPrecision, randomForestRecall, randomForestPrecision, logisticRegressionRecall, logisticRegressionPrecision, sgdRecall, sgdPrecision)
 #plot FMeasure comparison graph
-# ts.plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMeasure, logisticRegressionFMeasure, sgdFMeasure)
+ts.plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMeasure, logisticRegressionFMeasure, sgdFMeasure)
