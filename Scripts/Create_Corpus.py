@@ -6,17 +6,17 @@ import os
 import json
 
 # output_file = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/events_corpus_6k.csv'
-output_file = '/Users/zohaib/Development/workspace/text-mining/events_corpus.csv'
+output_file = '/Users/zohaib/Development/workspace/text-mining/events_corpus_10000.csv'
 
 events_tweets_directory_path = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/All_Downloaded_tweets'
 general_tweets_directory_path = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/General_Tweets'
 
 separator = ","
 CSV_File = open(output_file,'w')
-CSV_File.write("event"+separator+"text\n")
+CSV_File.write("event"+separator+"text"+separator+"timestamp\n")
 
-max_class_limit = 161190 #max tweets to be written from a single class/event
-max_general_limit = 1*max_class_limit
+max_class_limit = 10000 #max tweets to be written from a single class/event
+max_general_limit = 3*max_class_limit
 # max_class_limit = 100 #max tweets to be written from a single class/event
 corpus_class = '' #name for class of an event
 class_limit = 0 #number of tweets written from a single class/event
@@ -68,7 +68,7 @@ for filename in os.listdir(events_tweets_directory_path):
 			tweet_text = tweet_text.replace(separator,' ')
 			tweet_text = tweet_text.replace('RT ','')
 			# print('TWEET: '+tweet_text)
-			CSV_File.write(corpus_class+separator+tweet_text+"\n")
+			CSV_File.write(corpus_class+separator+tweet_text+separator+json_str['created_at']+"\n")
 			# 177078285476438017
 		if class_limit >= max_class_limit:
 			print ("Completed limit for class: "+corpus_class +', Total entries: '+ str(class_limit))
@@ -89,7 +89,7 @@ for file in ListOfFiles:
 			tweet_text = tweet_text.replace('\n',' ')
 			tweet_text = tweet_text.replace(separator,' ')
 			tweet_text = tweet_text.replace('RT ','')
-			CSV_File.write("no_event"+separator+tweet_text+"\n")
+			CSV_File.write("no_event"+separator+tweet_text+separator+json_str['created_at']+"\n")
 			g_limit = g_limit + 1
 		if g_limit >= max_general_limit:
 			print ("Completed limit for class: no_event, Total entries:" + str(g_limit))
