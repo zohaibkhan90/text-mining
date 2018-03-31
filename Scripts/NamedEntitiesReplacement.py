@@ -72,5 +72,23 @@ for named_entity in named_entities:
 		total_words = total_words + 1
 		data = data + " " + named_entity
 
+if len(data)>0:
+	response = nyau.callNERD(data)
+	response = response.decode("utf-8")
+	response = json.loads(response)
+
+	# parseNerdResponse(response)
+
+	api_calls_count = api_calls_count + 1 
+	print('Number of Calls Made: '+str(api_calls_count))
+	print('Expected Remaining Calls: '+str(expected_calls - api_calls_count))
+	file_number = file_number + 1
+	JSON_File = open(output_directory+output_filename.replace('xxxx',str(file_number)),'w')
+	JSON_File.write(str(response))
+	JSON_File.close()
+	print('Skip Words Next time: '+str(total_words))
+	print('Skip after this sequence: '+data[-50:]) 
+	#clear data
+	data = ""
 
 
