@@ -4,7 +4,8 @@
 import ast
 import os
 import json
-
+import time
+from datetime import datetime, timedelta
 # output_file = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/events_corpus_6k.csv'
 output_file = '/Users/zohaib/Development/workspace/text-mining/events_corpus_10000.csv'
 
@@ -25,6 +26,10 @@ quit = 0
 US_Tweets_Started = False
 
 ListOfFiles = []
+
+initial_time = datetime.strptime('Jan 01 00:00:00 +0000 2012', '%b %d %H:%M:%S %z %Y').timestamp()
+seconds_in_year = 365*24*60*60
+diff = seconds_in_year/max_general_limit
 
 def readDirectory (dir_path): #recursivelt reads directory for general tweets and adds all files paths in a list
 	# print("Directory Path is "+dir_path)
@@ -68,7 +73,9 @@ for filename in os.listdir(events_tweets_directory_path):
 			tweet_text = tweet_text.replace(separator,' ')
 			tweet_text = tweet_text.replace('RT ','')
 			# print('TWEET: '+tweet_text)
-			CSV_File.write(corpus_class+separator+tweet_text+separator+json_str['created_at']+"\n")
+			date_time = datetime.strptime(json_str['created_at'][4:], '%b %d %H:%M:%S %z %Y')
+			
+			CSV_File.write(corpus_class+separator+tweet_text+separator+str(date_time.timestamp())[:-2]+"\n")
 			# 177078285476438017
 		if class_limit >= max_class_limit:
 			print ("Completed limit for class: "+corpus_class +', Total entries: '+ str(class_limit))
@@ -89,7 +96,9 @@ for file in ListOfFiles:
 			tweet_text = tweet_text.replace('\n',' ')
 			tweet_text = tweet_text.replace(separator,' ')
 			tweet_text = tweet_text.replace('RT ','')
-			CSV_File.write("no_event"+separator+tweet_text+separator+json_str['created_at']+"\n")
+			initial_time = initial_time + diff
+			CSV_File.write("no_event"+separator+tweet_text+separator+str(initial_time)[:-2]+"\n")
+			# CSV_File.write("no_event"+separator+tweet_text+separator+str(initial_time)[:-2]+separator+datetime.fromtimestamp(initial_time).strftime('%Y-%m-%d %H:%M:%S')+"\n")
 			g_limit = g_limit + 1
 		if g_limit >= max_general_limit:
 			print ("Completed limit for class: no_event, Total entries:" + str(g_limit))
