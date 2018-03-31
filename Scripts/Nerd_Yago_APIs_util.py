@@ -22,7 +22,7 @@ nerd_annotation_data = {
 #URL and parameters for nerd entity call
 idAnnotationPlaceHolder='IDANNOTATION'
 key='9reqenou0oc0dop4aet49kht1eis95d5'
-NERD_ENTITY_URL = str('http://nerd.eurecom.fr/api/entity?key='+key+'&idAnnotation='+idAnnotationPlaceHolder)
+NERD_ENTITY_URL = str('http://nerd.eurecom.fr/api/entity?key='+key+'&idAnnotation='+idAnnotationPlaceHolder+'&granularity=oed')
 
 
 #URL, parameters and headers for yago annotation call
