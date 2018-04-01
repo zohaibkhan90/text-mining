@@ -12,9 +12,9 @@ max_general_limit = 3*max_class_limit
 # max_class_limit #max tweets to be written from a single class/event
 separator = ","
 
-output_file = '/Users/zohaib/Development/workspace/text-mining/events_corpus_'+str(max_class_limit)+'.csv'
-output_file_generic = '/Users/zohaib/Development/workspace/text-mining/events_corpus_generic_'+str(max_class_limit)+'.csv'
-output_file_specific = '/Users/zohaib/Development/workspace/text-mining/events_corpus_specific_'+str(max_class_limit)+'.csv'
+output_file = '/Users/zohaib/Development/workspace/text-mining/semantic_analysis/Corpuses/events_corpus_'+str(max_class_limit)+'.csv'
+output_file_generic = '/Users/zohaib/Development/workspace/text-mining/semantic_analysis/Corpuses/events_corpus_generic_'+str(max_class_limit)+'.csv'
+output_file_specific = '/Users/zohaib/Development/workspace/text-mining/semantic_analysis/Corpuses/events_corpus_specific_'+str(max_class_limit)+'.csv'
 
 events_tweets_directory_path = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/All_Downloaded_tweets'
 general_tweets_directory_path = '/Users/zohaib/Desktop/Courses/Text-Mining/Data/General_Tweets'
@@ -57,7 +57,7 @@ generic_ontology = {}
 specific_ontology = {}
 
 def createNamedEntitiesMaps():
-	ontologies_file = open('../NerdParser/parsed_set.txt','r')
+	ontologies_file = open('nerdparser/ne_parsed_set_nerd.txt','r')
 	topologies = ontologies_file.readlines()
 	topologies = eval(topologies[0])
 	for topology in topologies:
