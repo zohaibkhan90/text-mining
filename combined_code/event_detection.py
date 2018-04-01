@@ -27,9 +27,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 import string
-
-
-fname = "Corpuses/events_corpus_specific_500.csv"
+import sys
+fname = str(sys.argv[1])
+# fname = "events_corpus_500.csv"
 def lemmatize(word):
     lemmatizer = WordNetLemmatizer()
     return lemmatizer.lemmatize(word=word)
@@ -54,7 +54,7 @@ def finalClean(tweet):
 
 def pre():
     # Reading training and test files to list data structures
-    data = pd.read_csv(fname , sep = ",", index_col=False, encoding='latin-1', low_memory=False)
+    data = pd.read_csv("Corpuses/" + fname , sep = ",", index_col=False, encoding='latin-1', low_memory=False)
     df_old = DataFrame(data)
     # print(df_old)
 
@@ -135,6 +135,7 @@ def kFold(X_vec, y_encoded):
         return X_train, X_test, y_train, y_test
     
 def plotPreRec(naiveBayesRecall, naiveBayesPrecision, svmRecall, svmPrecision, randomForestRecall, randomForestPrecision, logisticRegressionRecall, logisticRegressionPrecision, sgdRecall, sgdPrecision):    
+    file = fname[:-4]
     plt.plot([naiveBayesRecall],[naiveBayesPrecision], 'ro')
     plt.plot([svmRecall],[svmPrecision], 'ms')
     plt.plot([randomForestRecall],[randomForestPrecision], 'yo')
@@ -145,18 +146,19 @@ def plotPreRec(naiveBayesRecall, naiveBayesPrecision, svmRecall, svmPrecision, r
     plt.ylabel('Precision')
     plt.title('Precision-Recall comparison plot')
     plt.legend(['MNB', 'SVM', 'RF', 'LR', 'SGD'], loc='upper left')
-    # plt.savefig(fname + "_Precision-Recall_comparison.jpg")
+    plt.savefig(file + "_Precision-Recall_comparison.jpg")
     # plt.show() 
     
 def plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMeasure, logisticRegressionFMeasure, sgdFMeasure):
     # Accuracy Comparison Plot
+    file = fname[:-4]
     cl = ('MNB', 'SVC', 'RF', 'LR', 'SGD')
     y_pos = np.arange(len(cl))
     acc = [77.2682926829,79.0243902439,76.8780487805,80.6829268293,75.3170731707]
     plt.bar(y_pos, acc, align='center', alpha=0.5)
     plt.xticks(y_pos, cl)
     plt.title('Accuracy Comparison')
-    # plt.savefig(fname + "_Accuracy_Comparison.jpg")
+    plt.savefig(file + "_Accuracy_Comparison.jpg")
     # plt.show()
     cl = ('MNB', 'SVC', 'RF', 'LR', 'SGD')
     y_pos = np.arange(len(cl))
@@ -164,7 +166,7 @@ def plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMe
     plt.bar(y_pos, acc, align='center', alpha=1.0)
     plt.xticks(y_pos, cl)
     plt.title('F Measure Comparison Plot')
-    # plt.savefig(fname + "_F-Measure_Comparison.jpg")
+    plt.savefig(file + "_F-Measure_Comparison.jpg")
     # plt.show()
  
 def applyNaiveBayesClassifier(X_train, y_train, X_test, y_test):
