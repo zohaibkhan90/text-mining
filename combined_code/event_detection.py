@@ -44,7 +44,7 @@ def finalClean(tweet):
     tweet = re.sub('[\s]+', ' ', tweet)
 
     #Strip tweet
-    tweet = tweet.strip('\'"')
+    tweet = tweet.strip()
     
     #look for 2 or more repetitions of character and replace with the character itself
     pattern = re.compile(r"(.)\1{1,}", re.DOTALL)
@@ -52,7 +52,7 @@ def finalClean(tweet):
 
 def pre():
     # Reading training and test files to list data structures
-    data = pd.read_csv("events_corpus_10k_1.csv", sep = ",", index_col=False, encoding='latin-1', low_memory=False)
+    data = pd.read_csv("../Corpuses/events_corpus_specific_500.csv", sep = ",", index_col=False, encoding='latin-1', low_memory=False)
     df_old = DataFrame(data)
 
     # Take those datasets in which text is not null
@@ -67,6 +67,8 @@ def pre():
     # Changes types in events column to string
     y = df['event'].astype(str)
 
+    timestamp = df['timestamp']
+
     # Replaces words with special characters
     x = x.str.replace('[^a-zA-Z0-9-_.]', ' ')
 
@@ -78,7 +80,7 @@ def pre():
     # Clean data per word
     x_clean = [finalClean(sentence) for sentence in x_lemma]
     #temp_df = [filter(lambda i: i not in string.punctuation,sentence) for sentence in x_clean]
-    return x_clean, y
+    return x_clean, y, timestamp
 
 def labelEncoding(y):
     labelEncoder = LabelEncoder()
@@ -88,15 +90,28 @@ def labelEncoding(y):
 
 def countVectorizer(x):
     stopset = set(stopwords.words('English'))
-    vect = CountVectorizer(analyzer='char_wb', encoding='utf-8', min_df = 0, ngram_range=(2, 2), lowercase = True, strip_accents='ascii', stop_words = stopset)
+    vect = CountVectorizer(analyzer='word', encoding='utf-8', min_df = 0, ngram_range=(1, 1), lowercase = True, strip_accents='ascii', stop_words = stopset)
     X_vec = vect.fit_transform(x)
     return X_vec
 
 def tfidfVectorizer(x):
     stopset = set(stopwords.words('English'))
-    vect = TfidfVectorizer(analyzer='word', encoding='utf-8', min_df = 0, ngram_range=(1, 1), lowercase = True, strip_accents='ascii', stop_words = stopset)
+    vect = TfidfVectorizer(analyzer='word', encoding='utf-8', min_df = 0, ngram_range=(2, 2), lowercase = True, strip_accents='ascii', stop_words = stopset)
     X_vec = vect.fit_transform(x)
     return X_vec
+
+def extractTimeFeatures(timestamp):
+    maxTime = timestamp.max()
+    minTime = timestamp.min()
+
+    floatArr = []
+
+    for index, item in enumerate(timestamp):
+        floatArr.append( (item-minTime)/(maxTime-minTime) )
+
+    normalized = pd.Series(floatArr)
+
+    return normalized
 
 def splitTestTrain(X_vec, y_encoded):
     X_train, X_test, y_train, y_test = train_test_split(X_vec, y_encoded, 
