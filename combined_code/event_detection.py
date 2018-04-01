@@ -54,11 +54,14 @@ def finalClean(tweet):
 
 def pre():
     # Reading training and test files to list data structures
-    data = pd.read_csv("../" + fname , sep = ",", index_col=False, encoding='latin-1', low_memory=False)
+    data = pd.read_csv(fname , sep = ",", index_col=False, encoding='latin-1', low_memory=False)
     df_old = DataFrame(data)
+    # print(df_old)
 
     # Take those datasets in which text is not null
     df = df_old[df_old['text'].notnull()]
+    # print(df)
+
 
     labelCount = df.groupby(df['event']).count()
     print(labelCount)
@@ -68,7 +71,7 @@ def pre():
 
     # Changes types in events column to string
     y = df['event'].astype(str)
-
+    # print(y)
     # Replaces words with special characters
     x = x.str.replace('[^a-zA-Z0-9-_.]', ' ')
 
@@ -128,7 +131,7 @@ def plotPreRec(naiveBayesRecall, naiveBayesPrecision, svmRecall, svmPrecision, r
     plt.ylabel('Precision')
     plt.title('Precision-Recall comparison plot')
     plt.legend(['MNB', 'SVM', 'RF', 'LR', 'SGD'], loc='upper left')
-    plt.savefig(fname + "_Precision-Recall_comparison.jpg")
+    # plt.savefig(fname + "_Precision-Recall_comparison.jpg")
     # plt.show() 
     
 def plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMeasure, logisticRegressionFMeasure, sgdFMeasure):
@@ -139,7 +142,7 @@ def plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMe
     plt.bar(y_pos, acc, align='center', alpha=0.5)
     plt.xticks(y_pos, cl)
     plt.title('Accuracy Comparison')
-    plt.savefig(fname + "_Accuracy_Comparison.jpg")
+    # plt.savefig(fname + "_Accuracy_Comparison.jpg")
     # plt.show()
     cl = ('MNB', 'SVC', 'RF', 'LR', 'SGD')
     y_pos = np.arange(len(cl))
@@ -147,7 +150,7 @@ def plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMe
     plt.bar(y_pos, acc, align='center', alpha=1.0)
     plt.xticks(y_pos, cl)
     plt.title('F Measure Comparison Plot')
-    plt.savefig(fname + "_F-Measure_Comparison.jpg")
+    # plt.savefig(fname + "_F-Measure_Comparison.jpg")
     # plt.show()
  
 def applyNaiveBayesClassifier(X_train, y_train, X_test, y_test):

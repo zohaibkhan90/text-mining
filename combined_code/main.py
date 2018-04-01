@@ -19,12 +19,12 @@ X_train, X_test, y_train, y_test = ts.splitTestTrain(X_vec, y_encoded)
 # print(X_train)
 # print("Y-train:")
 # print(y_train)
-#kfold validation
+# kfold validation
 #X_train, X_test, y_train, y_test = kFold(X_vec, y_encoded)
 #plot Labels of Dataset
 # ts.plotLabels(y)
 
-print("Start training with events_corpus_500")
+print("Start training with events_corpus")
 #precison, recall and f-measure of all the six classifiers
 naiveBayesPrecision, naiveBayesRecall, naiveBayesFMeasure = ts.applyNaiveBayesClassifier(X_train, y_train, X_test, y_test)
 svmPrecision, svmRecall, svmFMeasure = ts.applySVMClassifier(X_train, y_train, X_test, y_test)
