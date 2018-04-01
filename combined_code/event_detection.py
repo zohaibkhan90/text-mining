@@ -26,8 +26,10 @@ from sklearn.ensemble import RandomForestClassifier
 
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
+import string
 
 
+fname = "Corpuses/events_corpus_specific_500.csv"
 def lemmatize(word):
     lemmatizer = WordNetLemmatizer()
     return lemmatizer.lemmatize(word=word)
@@ -52,11 +54,14 @@ def finalClean(tweet):
 
 def pre():
     # Reading training and test files to list data structures
-    data = pd.read_csv("../Corpuses/events_corpus_specific_500.csv", sep = ",", index_col=False, encoding='latin-1', low_memory=False)
+    data = pd.read_csv(fname , sep = ",", index_col=False, encoding='latin-1', low_memory=False)
     df_old = DataFrame(data)
+    # print(df_old)
 
     # Take those datasets in which text is not null
     df = df_old[df_old['text'].notnull()]
+    # print(df)
+
 
     labelCount = df.groupby(df['event']).count()
     print(labelCount)
@@ -66,11 +71,14 @@ def pre():
 
     # Changes types in events column to string
     y = df['event'].astype(str)
-
     timestamp = df['timestamp']
 
     # Replaces words with special characters
     x = x.str.replace('[^a-zA-Z0-9-_.]', ' ')
+
+    # Replaces unreadable characters, further cleaning
+    printable = set(string.printable)
+    filter(lambda q: q in printable, x)
 
     # Lemmatize words
     x_lemma = [" ".join([lemmatize(word) for word in sentence.split(" ")]) for sentence in x]
@@ -132,12 +140,13 @@ def plotPreRec(naiveBayesRecall, naiveBayesPrecision, svmRecall, svmPrecision, r
     plt.plot([randomForestRecall],[randomForestPrecision], 'yo')
     plt.plot([logisticRegressionRecall],[logisticRegressionPrecision], 'go')
     plt.plot([sgdRecall],[sgdPrecision], 'xb-')
-    plt.axis([0, 1, 0, 1])
+    plt.axis([0.7, 1, 0.7, 1])
     plt.xlabel('Recall')
     plt.ylabel('Precision')
     plt.title('Precision-Recall comparison plot')
     plt.legend(['MNB', 'SVM', 'RF', 'LR', 'SGD'], loc='upper left')
-    plt.show() 
+    # plt.savefig(fname + "_Precision-Recall_comparison.jpg")
+    # plt.show() 
     
 def plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMeasure, logisticRegressionFMeasure, sgdFMeasure):
     # Accuracy Comparison Plot
@@ -146,15 +155,17 @@ def plotAcuuracyComaprisonGraph(naiveBayesFMeasure, svmFMeasure, randomForestFMe
     acc = [77.2682926829,79.0243902439,76.8780487805,80.6829268293,75.3170731707]
     plt.bar(y_pos, acc, align='center', alpha=0.5)
     plt.xticks(y_pos, cl)
-    plt.title('Accuracy Comparison Plot')
-    plt.show()
+    plt.title('Accuracy Comparison')
+    # plt.savefig(fname + "_Accuracy_Comparison.jpg")
+    # plt.show()
     cl = ('MNB', 'SVC', 'RF', 'LR', 'SGD')
     y_pos = np.arange(len(cl))
     acc = [naiveBayesFMeasure, svmFMeasure, randomForestFMeasure, logisticRegressionFMeasure, sgdFMeasure]
     plt.bar(y_pos, acc, align='center', alpha=1.0)
     plt.xticks(y_pos, cl)
     plt.title('F Measure Comparison Plot')
-    plt.show()
+    # plt.savefig(fname + "_F-Measure_Comparison.jpg")
+    # plt.show()
  
 def applyNaiveBayesClassifier(X_train, y_train, X_test, y_test):
     # Thanks to sklearn, let us quickly train some multinomial models
@@ -290,6 +301,7 @@ def plotLabels(y):
     df = pd.DataFrame(y_count,index=key)
     df.drop(df.columns[1:], inplace=True)
     df.plot(kind='bar')
+
     plt.show()
     
 
