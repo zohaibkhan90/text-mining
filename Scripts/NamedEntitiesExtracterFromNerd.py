@@ -10,7 +10,7 @@ data_limit = 170000
 separator = ","
 
 nes_file = open(input_nes,'r')
-output_filename = 'ne_replacedxxxx_.json'
+output_filename = 'ne_replaced_xxxx.json'
 
 
 
