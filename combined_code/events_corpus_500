@@ -1,0 +1,88 @@
+  File "main.py", line 3, in <module>
+    import event_detection as ts
+  File "/Users/umair/text-mining/combined_code/event_detection.py", line 31, in <module>
+    fname = str(sys.argv)
+NameError: name 'sys' is not defined
+Umairs-Macbook-Pro:combined_code umair$ python main.py events_corpus_generic_500.csv
+Traceback (most recent call last):
+  File "main.py", line 3, in <module>
+    import event_detection as ts
+  File "/Users/umair/text-mining/combined_code/event_detection.py", line 31, in <module>
+    fname = str(sys.argv)
+NameError: name 'sys' is not defined
+Umairs-Macbook-Pro:combined_code umair$ python main.py events_corpus_generic_500.csv
+events_corpus_generic_500.csv
+Traceback (most recent call last):
+  File "main.py", line 7, in <module>
+    x, y, timestamp = ts.pre()
+  File "/Users/umair/text-mining/combined_code/event_detection.py", line 56, in pre
+    data = pd.read_csv("Corpuses/" + fname , sep = ",", index_col=False, encoding='latin-1', low_memory=False)
+NameError: name 'fname' is not defined
+Umairs-Macbook-Pro:combined_code umair$ python main.py events_corpus_generic_500.csv
+events_corpus_generic_500.csv
+Traceback (most recent call last):
+  File "main.py", line 7, in <module>
+    x, y, timestamp = ts.pre()
+  File "/Users/umair/text-mining/combined_code/event_detection.py", line 56, in pre
+    data = pd.read_csv("Corpuses/" + fname , sep = ",", index_col=False, encoding='latin-1', low_memory=False)
+NameError: name 'fname' is not defined
+Umairs-Macbook-Pro:combined_code umair$ python main.py events_corpus_generic_500.csv
+events_corpus_generic_500.csv
+               text  timestamp
+event                         
+fifa_final      500        500
+no_event       1490       1490
+super_tuesday   500        500
+us_elections    500        500
+Start training with events_corpus_generic_500
+Multinomial Naive Bayes Classifier Test Accuracy:  84.2809364548495
+Multinomial Naive Bayes Classifier Test Precision:  82.9772361784557
+Multinomial Naive Bayes Classifier Test Recall:  85.27686293854421
+Multinomial Naive Bayes Classifier Test F measure:  84.11133438940908
+^Z
+[12]+  Stopped                 python main.py events_corpus_generic_500.csv
+Umairs-Macbook-Pro:combined_code umair$ clear
+
+Umairs-Macbook-Pro:combined_code umair$ python main.py events_corpus_500.csv
+               text  timestamp
+event                         
+fifa_final      500        500
+no_event       1490       1490
+super_tuesday   500        500
+us_elections    500        500
+Start training with events_corpus_500
+Multinomial Naive Bayes Classifier Test Accuracy:  86.12040133779264
+Multinomial Naive Bayes Classifier Test Precision:  84.64799141907518
+Multinomial Naive Bayes Classifier Test Recall:  89.43613219777515
+Multinomial Naive Bayes Classifier Test F measure:  86.97621349428736
+Model Accuracies Mean 96.1490749657781
+Model Accuracies Standard Devision 1.4873841288874146
+SVCs Test Accuracy:  95.65217391304348
+SVCs Test Precision:  97.51980198019801
+SVCs Test Recall:  94.34522767361078
+SVCs Test F measure:  95.90625177613839
+Model Accuracies Mean 98.03432359832588
+Model Accuracies Standard Devision 1.0895714389789195
+Random Forests Test Accuracy:  98.16053511705685
+Random Forests Test Precision:  99.0582191780822
+Random Forests Test Recall:  97.47723998406033
+Random Forests Test F measure:  98.26137068984984
+LogisticRegression_classifier Accuracy percent: 94.81605351170569
+LogisticRegression_classifier Precision percent: 97.325543120474
+LogisticRegression_classifier Recall percent: 93.06195315773438
+LogisticRegression_classifier F measure: 95.14600813588515
+/anaconda3/lib/python3.6/site-packages/sklearn/linear_model/stochastic_gradient.py:128: FutureWarning: max_iter and tol parameters have been added in <class 'sklearn.linear_model.stochastic_gradient.SGDClassifier'> in 0.19. If both are left unset, they default to max_iter=5 and tol=None. If tol is not None, max_iter defaults to max_iter=1000. From 0.21, default max_iter will be 1000, and default tol will be 1e-3.
+  "and default tol will be 1e-3." % type(self), FutureWarning)
+SGD_classifier Accuracy percent: 96.15384615384616
+SGD_classifier Precision percent: 97.60099380485286
+SGD_classifier Recall percent: 95.15925247813831
+SGD_classifier Recall F measure: 96.36465807330453
+SGD_classifier Accuracy percent: 99.83277591973244
+SGD_classifier Precision percent: 99.75490196078431
+SGD_classifier Recall percent: 99.91103202846975
+SGD_classifier Recall F measure: 99.83290595116922
+Umairs-Macbook-Pro:combined_code umair$ 
+
+
+
+

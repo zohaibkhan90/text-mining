@@ -34,7 +34,7 @@ X_train, X_test, y_train, y_test = ts.splitTestTrain(X_vec, y_encoded)
 #plot Labels of Dataset
 # ts.plotLabels(y)
 
-print("Start training with " + fname[:-4])
+print("\n\nStart training with " + fname[:-4])
 #precison, recall and f-measure of all the six classifiers
 naiveBayesPrecision, naiveBayesRecall, naiveBayesFMeasure = ts.applyNaiveBayesClassifier(X_train, y_train, X_test, y_test)
 svmPrecision, svmRecall, svmFMeasure = ts.applySVMClassifier(X_train, y_train, X_test, y_test)
