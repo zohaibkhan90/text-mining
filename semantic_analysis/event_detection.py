@@ -141,7 +141,7 @@ def plotPreRec(naiveBayesRecall, naiveBayesPrecision, svmRecall, svmPrecision, r
     plt.plot([randomForestRecall],[randomForestPrecision], 'yo')
     plt.plot([logisticRegressionRecall],[logisticRegressionPrecision], 'go')
     plt.plot([sgdRecall],[sgdPrecision], 'xb-')
-    plt.axis([0.7, 1, 0.7, 1])
+    plt.axis([0.4, 1, 0.4, 1])
     plt.xlabel('Recall')
     plt.ylabel('Precision')
     plt.title('Precision-Recall comparison plot')

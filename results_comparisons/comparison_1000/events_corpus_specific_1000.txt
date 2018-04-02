@@ -1,0 +1,57 @@
+               text  timestamp
+event                         
+fifa_final     1000       1000
+no_event       2990       2990
+super_tuesday  1000       1000
+us_elections   1000       1000
+
+
+Start training with events_corpus_specific_1000
+
+
+Multinomial Naive Bayes Accuracies Mean 71.05198624707859
+Multinomial Naive Bayes Accuracies Standard Devision 2.2669348471166524
+Multinomial Naive Bayes Classifier Test Accuracy:  71.91986644407345
+Multinomial Naive Bayes Classifier Test Precision:  71.49378908986294
+Multinomial Naive Bayes Classifier Test Recall:  69.35702675272576
+Multinomial Naive Bayes Classifier Test F measure:  70.40920015828604
+
+
+SVCs Accuracies Mean 72.9918168541914
+SVCs Accuracies Standard Devision 2.8191020200586476
+SVCs Test Accuracy:  74.25709515859766
+SVCs Test Precision:  89.44232932251333
+SVCs Test Recall:  61.73445211192961
+SVCs Test F measure:  73.04922282307726
+
+
+Random Forest's Accuracies Mean 94.62769392122337
+Random Forest's Accuracies Standard Devision 3.4232744675595943
+Random Forest's Test Accuracy:  99.6661101836394
+Random Forest's Test Precision:  99.66387373594901
+Random Forest's Test Recall:  99.63422191307865
+Random Forest's Test F measure:  99.64904561869596
+
+
+LogisticRegression_classifier Accuracies Mean 71.31982919573514
+LogisticRegression_classifier Accuracies Standard Devision 2.3311057795287318
+LogisticRegression_classifier Accuracy percent: 73.5559265442404
+LogisticRegression_classifier Precision percent: 88.61015779350363
+LogisticRegression_classifier Recall percent: 61.037133041575245
+LogisticRegression_classifier F measure: 72.28343339723523
+
+
+SGD_classifier Accuracies Mean 73.69040164836578
+SGD_classifier Accuracies Standard Devision 2.9466859366967872
+SGD_classifier Accuracy percent: 75.59265442404006
+SGD_classifier Precision percent: 88.11087095550786
+SGD_classifier Recall percent: 64.39009089071355
+SGD_classifier Recall F measure: 74.40565515916
+
+
+Decision Tree Classifier Accuracies Mean 99.83311036882199
+Decision Tree Classifier Accuracies Standard Devision 0.105585582384781
+Decision Tree Classifier Accuracy percent: 99.96661101836393
+Decision Tree Classifier Precision percent: 99.94959677419355
+Decision Tree Classifier Recall percent: 99.98343273691187
+Decision Tree Classifier Recall F measure: 99.96651189241304

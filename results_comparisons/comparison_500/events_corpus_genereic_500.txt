@@ -41,12 +41,12 @@ LogisticRegression_classifier Recall percent: 57.69160065472175
 LogisticRegression_classifier F measure: 69.53986695457013
 
 
-SGD_classifier Accuracies Mean 71.75894405269479
-SGD_classifier Accuracies Standard Devision 3.389090513932648
-SGD_classifier Accuracy percent: 73.04347826086956
-SGD_classifier Precision percent: 83.8494006176562
-SGD_classifier Recall percent: 63.20033362368528
-SGD_classifier Recall F measure: 72.07507202270168
+SGD_classifier Accuracies Mean 70.49182259639029
+SGD_classifier Accuracies Standard Devision 2.943360634028011
+SGD_classifier Accuracy percent: 73.84615384615385
+SGD_classifier Precision percent: 80.91051801302557
+SGD_classifier Recall percent: 65.74186514132897
+SGD_classifier Recall F measure: 72.54172416862566
 
 
 Decision Tree Classifier Accuracies Mean 99.79910514541388
